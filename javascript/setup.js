@@ -19,6 +19,8 @@ promptHubSetup = {
     savedUpdate: null,
     historyUiContainer: null,
     savedUiContainer: null,
+    img2ImgHistoryUiContainer: null,
+    img2ImgSavedUiContainer: null,
 
     txt2ImgTab: null,
     txt2ImgTopRow: null,
@@ -30,6 +32,7 @@ promptHubSetup = {
     img2ImgTab: null,
     img2ImgTopRow: null,
     img2ImgSettings: null,
+    img2imgResults: null,
     img2ImgPrompt: null,
     img2ImgNegPrompt: null,
     positiveHistoryList: null,
@@ -98,6 +101,7 @@ promptHubSetup = {
       promptHubSetup.els.img2ImgTab,
       promptHubSetup.els.img2ImgTopRow,
       promptHubSetup.els.img2ImgSettings,
+      promptHubSetup.els.img2ImgResults,
       promptHubSetup.els.img2ImgPromptContainer,
       promptHubSetup.els.img2ImgPrompt,
       promptHubSetup.els.img2ImgNegPrompt,
@@ -112,6 +116,7 @@ promptHubSetup = {
       "#tab_img2img",
       "#img2img_toprow",
       "#img2img_settings",
+      "#img2img_results",
       "#img2img_prompt_container",
       "#img2img_prompt textarea",
       "#img2img_neg_prompt textarea",
@@ -133,6 +138,22 @@ promptHubSetup = {
       promptHubSetup.els.txt2ImgResults
     );
     promptHubSetup.els.txt2ImgResultsContainerDiv.appendChild(promptHubSetup.els.txt2ImgResults);
+
+    promptHubSetup.els.img2ImgSettingsContainerDiv = document.createElement("div");
+    promptHubSetup.els.img2ImgSettingsContainerDiv.id = "img2img-promptHub-settings-container";
+    promptHubSetup.els.img2ImgSettings.parentNode.insertBefore(
+      promptHubSetup.els.img2ImgSettingsContainerDiv,
+      promptHubSetup.els.img2ImgSettings
+    );
+    promptHubSetup.els.img2ImgSettingsContainerDiv.appendChild(promptHubSetup.els.img2ImgSettings);
+
+    promptHubSetup.els.img2ImgResultsContainerDiv = document.createElement("div");
+    promptHubSetup.els.img2ImgResultsContainerDiv.id = "img2img-promptHub-results-container";
+    promptHubSetup.els.img2ImgResults.parentNode.insertBefore(
+      promptHubSetup.els.img2ImgResultsContainerDiv,
+      promptHubSetup.els.img2ImgResults
+    );
+    promptHubSetup.els.img2ImgResultsContainerDiv.appendChild(promptHubSetup.els.img2ImgResults);
 
     promptHubSetup.injectUI();
   },
@@ -457,11 +478,25 @@ promptHubSetup = {
     promptHubSetup.debug("Initializing tab mutation observer...");
     promptHubSetup.tabMutationObserver = new MutationObserver(function (mutationsList) {
       if (promptHubSetup.els.txt2ImgTab.style.display === "block") {
-        promptHubSetup.els.txt2ImgTopRow.insertAdjacentElement("afterend", promptHubSetup.els.uiContainer);
+        promptHubSetup.els.txt2ImgSettingsContainerDiv.insertBefore(
+          promptHubSetup.els.historyUiContainer,
+          promptHubSetup.els.txt2ImgSettings
+        );
+        promptHubSetup.els.txt2ImgResultsContainerDiv.insertBefore(
+          promptHubSetup.els.savedUiContainer,
+          promptHubSetup.els.txt2ImgResults
+        );
         promptHubSetup.txt2ImgActive = true;
         gradioApp().querySelector("#promptHub-history-current-label").innerText = "Save Current txt2img Prompt";
       } else if (promptHubSetup.els.img2ImgTab.style.display === "block") {
-        promptHubSetup.els.img2ImgTopRow.insertAdjacentElement("afterend", promptHubSetup.els.uiContainer);
+        promptHubSetup.els.img2ImgSettingsContainerDiv.insertBefore(
+          promptHubSetup.els.historyUiContainer,
+          promptHubSetup.els.img2ImgSettings
+        );
+        promptHubSetup.els.img2ImgResultsContainerDiv.insertBefore(
+          promptHubSetup.els.savedUiContainer,
+          promptHubSetup.els.img2ImgResults
+        );
         promptHubSetup.txt2ImgActive = false;
         gradioApp().querySelector("#promptHub-history-current-label").innerText = "Save Current img2img Prompt";
       }
