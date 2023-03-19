@@ -34,22 +34,27 @@ window.promptHubInterface = {
     const negativeHistory = JSON.parse(localStorage.getItem("promptHub-negative-history"));
     const savedPromptData = JSON.parse(localStorage.getItem("promptHub-saved-prompts"));
 
-    positiveHistory.forEach((prompt) => {
-      console.log("Load history positive", prompt);
-      promptHubInterface.createHistoryItem(prompt, true);
-    });
+    if (positiveHistory !== null) {
+      positiveHistory.forEach((prompt) => {
+        promptHubInterface.createHistoryItem(prompt, true);
+      });
+    }
 
-    negativeHistory.forEach((prompt) => {
-      promptHubInterface.createHistoryItem(prompt, false);
-    });
+    if (negativeHistory !== null) {
+      negativeHistory.forEach((prompt) => {
+        promptHubInterface.createHistoryItem(prompt, false);
+      });
+    }
 
-    for (const id in savedPromptData) {
-      if (savedPromptData.hasOwnProperty(id)) {
-        promptHubInterface.createSavedItem(
-          savedPromptData[id].name,
-          savedPromptData[id].positive,
-          savedPromptData[id].negative
-        );
+    if (savedPromptData !== null) {
+      for (const id in savedPromptData) {
+        if (savedPromptData.hasOwnProperty(id)) {
+          promptHubInterface.createSavedItem(
+            savedPromptData[id].name,
+            savedPromptData[id].positive,
+            savedPromptData[id].negative
+          );
+        }
       }
     }
   },

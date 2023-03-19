@@ -17,10 +17,13 @@ promptHubSetup = {
     savedPositiveInput: null,
     savedNegativeInput: null,
     savedUpdate: null,
+    historyUiContainer: null,
+    savedUiContainer: null,
 
     txt2ImgTab: null,
     txt2ImgTopRow: null,
     txt2ImgSettings: null,
+    txt2ImgResults: null,
     txt2ImgPrompt: null,
 
     txt2ImgNegPrompt: null,
@@ -29,7 +32,6 @@ promptHubSetup = {
     img2ImgSettings: null,
     img2ImgPrompt: null,
     img2ImgNegPrompt: null,
-    uiContainer: null,
     positiveHistoryList: null,
     negativeHistoryList: null,
     savedPromptsList: null,
@@ -89,6 +91,7 @@ promptHubSetup = {
       promptHubSetup.els.txt2ImgTab,
       promptHubSetup.els.txt2ImgTopRow,
       promptHubSetup.els.txt2ImgSettings,
+      promptHubSetup.els.txt2ImgResults,
       promptHubSetup.els.txt2ImgPromptContainer,
       promptHubSetup.els.txt2ImgPrompt,
       promptHubSetup.els.txt2ImgNegPrompt,
@@ -102,6 +105,7 @@ promptHubSetup = {
       "#tab_txt2img",
       "#txt2img_toprow",
       "#txt2img_settings",
+      "#txt2img_results",
       "#txt2img_prompt_container",
       "#txt2img_prompt textarea",
       "#txt2img_neg_prompt textarea",
@@ -113,6 +117,23 @@ promptHubSetup = {
       "#img2img_neg_prompt textarea",
     ]);
     promptHubSetup.setupComplete = true;
+
+    promptHubSetup.els.txt2ImgSettingsContainerDiv = document.createElement("div");
+    promptHubSetup.els.txt2ImgSettingsContainerDiv.id = "txt2img-promptHub-settings-container";
+    promptHubSetup.els.txt2ImgSettings.parentNode.insertBefore(
+      promptHubSetup.els.txt2ImgSettingsContainerDiv,
+      promptHubSetup.els.txt2ImgSettings
+    );
+    promptHubSetup.els.txt2ImgSettingsContainerDiv.appendChild(promptHubSetup.els.txt2ImgSettings);
+
+    promptHubSetup.els.txt2ImgResultsContainerDiv = document.createElement("div");
+    promptHubSetup.els.txt2ImgResultsContainerDiv.id = "txt2img-promptHub-results-container";
+    promptHubSetup.els.txt2ImgResults.parentNode.insertBefore(
+      promptHubSetup.els.txt2ImgResultsContainerDiv,
+      promptHubSetup.els.txt2ImgResults
+    );
+    promptHubSetup.els.txt2ImgResultsContainerDiv.appendChild(promptHubSetup.els.txt2ImgResults);
+
     promptHubSetup.injectUI();
   },
 
@@ -121,11 +142,38 @@ promptHubSetup = {
     fetch(`${window.location}file=/home/zetaphor/stable-diffusion-webui/extensions/promptHub/ui.html`)
       .then((response) => response.text())
       .then((data) => {
-        promptHubSetup.els.uiContainer = document.createElement("div");
-        promptHubSetup.els.uiContainer.innerHTML = data;
-        promptHubSetup.els.uiContainer.id = "promptHub-container";
-        promptHubSetup.els.uiContainer.classList.add("flex", "row", "w-full", "flex-wrap", "gap-4", "unequal-height");
-        promptHubSetup.els.txt2ImgTopRow.insertAdjacentElement("afterend", promptHubSetup.els.uiContainer);
+        const uiParser = new DOMParser();
+        const uiData = uiParser.parseFromString(data, "text/html");
+
+        promptHubSetup.els.historyUiContainer = uiData.querySelector("#promptHub-section-history");
+        promptHubSetup.els.savedUiContainer = uiData.querySelector("#promptHub-section-saved");
+
+        promptHubSetup.els.historyUiContainer.classList.add(
+          "flex",
+          "row",
+          "w-full",
+          "flex-wrap",
+          "gap-4",
+          "unequal-height"
+        );
+        promptHubSetup.els.savedUiContainer.classList.add(
+          "flex",
+          "row",
+          "w-full",
+          "flex-wrap",
+          "gap-4",
+          "unequal-height"
+        );
+
+        promptHubSetup.els.txt2ImgSettingsContainerDiv.insertBefore(
+          promptHubSetup.els.historyUiContainer,
+          promptHubSetup.els.txt2ImgSettings
+        );
+
+        promptHubSetup.els.txt2ImgResultsContainerDiv.insertBefore(
+          promptHubSetup.els.savedUiContainer,
+          promptHubSetup.els.txt2ImgResults
+        );
 
         promptHubSetup.initTabObserver();
         promptHubSetup.injectText2ImgPromptUI();

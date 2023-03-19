@@ -1,4 +1,8 @@
-<div class="flex flex-col relative col gap-4 gr-compact promptHub-section">
+<div
+  id="promptHub-section-history"
+  style="margin-bottom: 1rem"
+  class="flex flex-col relative col gap-4 gr-compact promptHub-section"
+>
   <input type="file" id="promptHub-file-input" accept=".json,application/json" />
   <div id="promptHub-history-toggle" class="w-full flex justify-between cursor-pointer">
     <span class="promptHub-prompt-title"><strong>Prompt History</strong></span>
@@ -133,7 +137,11 @@
   </div>
 </div>
 
-<div class="flex flex-col relative col gap-4 gr-compact promptHub-section">
+<div
+  id="promptHub-section-saved"
+  style="margin-bottom: 1rem"
+  class="flex flex-col relative col gap-4 gr-compact promptHub-section"
+>
   <div id="promptHub-saved-toggle" class="w-full flex justify-between cursor-pointer">
     <span class="promptHub-prompt-title"><strong>Saved Prompts</strong></span>
     <span id="saved-header-expansion-indicator" class="transition rotate-90">▼</span>
