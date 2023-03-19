@@ -15,6 +15,7 @@ const els = {
   txt2ImgTopRow: null,
   txt2ImgSettings: null,
   txt2ImgPrompt: null,
+
   txt2ImgNegPrompt: null,
   img2ImgTab: null,
   img2ImgTopRow: null,
@@ -22,12 +23,17 @@ const els = {
   img2ImgPrompt: null,
   img2ImgNegPrompt: null,
   uiContainer: null,
+  positiveHistoryList: null,
+  negativeHistoryList: null,
+  savedPromptsList: null,
 };
 
-let tabMutationObserver = null;
+let betttabMutationObserver = null;
 
 let setupComplete = false;
 let timeout = null;
+
+let txt2ImgActive = true;
 
 const btnToolClasses = ["gr-button", "gr-button-lg", "gr-button-tool", "sd-better-styles-prompt-btn"];
 
@@ -52,8 +58,8 @@ async function setup() {
   if (setupComplete) return;
   info("Setting up...");
   [
-    els.txt2ImgTabEl,
-    els.txt2ImgTopRowEl,
+    els.txt2ImgTab,
+    els.txt2ImgTopRow,
     els.txt2ImgSettings,
     els.txt2ImgPromptContainer,
     els.txt2ImgPrompt,
@@ -69,16 +75,15 @@ async function setup() {
     "#txt2img_toprow",
     "#txt2img_settings",
     "#txt2img_prompt_container",
-    "#txt2img_prompt",
-    "#txt2img_neg_prompt",
+    "#txt2img_prompt textarea",
+    "#txt2img_neg_prompt textarea",
     "#tab_img2img",
     "#img2img_toprow",
     "#img2img_settings",
     "#img2img_prompt_container",
-    "#img2img_prompt",
-    "#img2img_neg_prompt",
+    "#img2img_prompt textarea",
+    "#img2img_neg_prompt textarea",
   ]);
-  info("Setup complete");
   setupComplete = true;
   injectUI();
 }
@@ -93,11 +98,85 @@ function injectUI() {
       els.uiContainer.id = "sd-better-styles-container";
       els.uiContainer.classList.add("flex", "row", "w-full", "flex-wrap", "gap-4", "unequal-height");
       els.txt2ImgTopRow.insertAdjacentElement("afterend", els.uiContainer);
+
       initTabObserver();
       injectText2ImgPromptUI();
       injectImg2ImgPromptUI();
+      setupButtons();
+
+      els.positiveHistoryList = gradioApp().querySelector("#sd-better-styles-positive-history");
+      els.negativeHistoryList = gradioApp().querySelector("#sd-better-styles-negative-history");
+      els.savedPromptsList = gradioApp().querySelector("#sd-better-styles-saved-prompts");
+
+      loadHistory();
+      info("Setup complete!");
     })
     .catch((error) => console.error(error));
+}
+
+function setupButtons() {
+  debug("Adding button listeners...");
+  gradioApp()
+    .querySelector("#sd-better-styles-history-add-positive")
+    .addEventListener("click", () => {
+      addHistoryItem(true);
+    });
+  gradioApp()
+    .querySelector("#sd-better-styles-history-remove-positive")
+    .addEventListener("click", () => {
+      removeHistoryItem(true);
+    });
+  gradioApp()
+    .querySelector("#sd-better-styles-history-save-positive")
+    .addEventListener("click", () => {
+      saveHistoryItem(true);
+    });
+  gradioApp()
+    .querySelector("#sd-better-styles-history-reset-positive")
+    .addEventListener("click", () => {
+      clearHistory(true);
+    });
+  gradioApp()
+    .querySelector("#sd-better-styles-history-import-positive")
+    .addEventListener("click", () => {
+      clearHistory(true);
+    });
+  gradioApp()
+    .querySelector("#sd-better-styles-history-export-positive")
+    .addEventListener("click", () => {
+      clearHistory(true);
+    });
+
+  gradioApp()
+    .querySelector("#sd-better-styles-history-add-negative")
+    .addEventListener("click", () => {
+      addHistoryItem(false);
+    });
+  gradioApp()
+    .querySelector("#sd-better-styles-history-remove-negative")
+    .addEventListener("click", () => {
+      removeHistoryItem(false);
+    });
+  gradioApp()
+    .querySelector("#sd-better-styles-history-save-negative")
+    .addEventListener("click", () => {
+      saveHistoryItem(false);
+    });
+  gradioApp()
+    .querySelector("#sd-better-styles-history-reset-negative")
+    .addEventListener("click", () => {
+      clearHistory(false);
+    });
+  gradioApp()
+    .querySelector("#sd-better-styles-history-import-negative")
+    .addEventListener("click", () => {
+      clearHistory(false);
+    });
+  gradioApp()
+    .querySelector("#sd-better-styles-history-export-negative")
+    .addEventListener("click", () => {
+      clearHistory(false);
+    });
 }
 
 function injectText2ImgPromptUI() {
@@ -111,16 +190,18 @@ function injectText2ImgPromptUI() {
   const t2iBtnPositiveClear = document.createElement("button");
   t2iBtnPositiveClear.classList.add(...btnToolClasses);
   t2iBtnPositiveClear.innerText = "🗑";
+  t2iBtnPositiveClear.title = "Clear the positive prompt";
   t2iBtnPositiveClear.addEventListener("click", function () {
-    els.txt2ImgPrompt.querySelector("textarea").value = "";
+    els.txt2ImgPrompt.value = "";
   });
 
   const t2iBtnPositiveSave = document.createElement("button");
   t2iBtnPositiveSave.classList.add(...btnToolClasses);
   t2iBtnPositiveSave.classList.add("sd-better-styles-prompt-top-button");
   t2iBtnPositiveSave.innerText = "💾";
+  t2iBtnPositiveClear.title = "Save the positive prompt";
   t2iBtnPositiveSave.addEventListener("click", function () {
-    // els.txt2ImgPrompt.querySelector("textarea").value = "";
+    createHistoryItem(els.txt2ImgPrompt.value, true);
   });
 
   t2iPositiveBtnContainer.appendChild(t2iBtnPositiveSave);
@@ -137,16 +218,18 @@ function injectText2ImgPromptUI() {
   const t2iBtnNegativeClear = document.createElement("button");
   t2iBtnNegativeClear.classList.add(...btnToolClasses);
   t2iBtnNegativeClear.innerText = "🗑";
+  t2iBtnPositiveClear.title = "Clear the negative prompt";
   t2iBtnNegativeClear.addEventListener("click", function () {
-    els.txt2ImgNegPrompt.querySelector("textarea").value = "";
+    els.txt2ImgNegPrompt.value = "";
   });
 
   const t2iBtnNegativeSave = document.createElement("button");
   t2iBtnNegativeSave.classList.add(...btnToolClasses);
   t2iBtnNegativeSave.classList.add("sd-better-styles-prompt-top-button");
   t2iBtnNegativeSave.innerText = "💾";
+  t2iBtnPositiveClear.title = "Save the negative prompt";
   t2iBtnNegativeSave.addEventListener("click", function () {
-    // els.txt2ImgNegPrompt.querySelector("textarea").value = "";
+    createHistoryItem(els.txt2ImgNegPrompt.value, false);
   });
 
   t2iNegativeBtnContainer.appendChild(t2iBtnNegativeSave);
@@ -165,16 +248,18 @@ function injectImg2ImgPromptUI() {
   const i2iBtnPositiveClear = document.createElement("button");
   i2iBtnPositiveClear.classList.add(...btnToolClasses);
   i2iBtnPositiveClear.innerText = "🗑";
+  i2iBtnPositiveClear.title = "Clear the positive prompt";
   i2iBtnPositiveClear.addEventListener("click", function () {
-    els.img2ImgPrompt.querySelector("textarea").value = "";
+    els.img2ImgPrompt.value = "";
   });
 
   const i2iBtnPositiveSave = document.createElement("button");
   i2iBtnPositiveSave.classList.add(...btnToolClasses);
   i2iBtnPositiveSave.classList.add("sd-better-styles-prompt-top-button");
   i2iBtnPositiveSave.innerText = "💾";
+  i2iBtnPositiveClear.title = "Save the positive prompt";
   i2iBtnPositiveSave.addEventListener("click", function () {
-    // els.img2ImgPrompt.querySelector("textarea").value = "";
+    createHistoryItem(els.img2ImgPrompt.value, true);
   });
 
   i2iPositiveBtnContainer.appendChild(i2iBtnPositiveSave);
@@ -191,6 +276,7 @@ function injectImg2ImgPromptUI() {
   const i2iBtnNegativeClear = document.createElement("button");
   i2iBtnNegativeClear.classList.add(...btnToolClasses);
   i2iBtnNegativeClear.innerText = "🗑";
+  i2iBtnPositiveClear.title = "Clear the negative prompt";
   i2iBtnNegativeClear.addEventListener("click", function () {
     els.img2ImgNegPrompt.querySelector("textarea").value = "";
   });
@@ -199,8 +285,9 @@ function injectImg2ImgPromptUI() {
   i2iBtnNegativeSave.classList.add(...btnToolClasses);
   i2iBtnNegativeSave.classList.add("sd-better-styles-prompt-top-button");
   i2iBtnNegativeSave.innerText = "💾";
+  i2iBtnPositiveClear.title = "Save the negative prompt";
   i2iBtnNegativeSave.addEventListener("click", function () {
-    // els.img2ImgNegPrompt.querySelector("textarea").value = "";
+    createHistoryItem(els.img2ImgNegPrompt.querySelector("textarea").value, false);
   });
 
   i2iNegativeBtnContainer.appendChild(i2iBtnNegativeSave);
@@ -213,10 +300,10 @@ function initTabObserver() {
   tabMutationObserver = new MutationObserver(function (mutationsList) {
     if (els.txt2ImgTab.style.display === "block") {
       els.txt2ImgTopRow.insertAdjacentElement("afterend", els.uiContainer);
-      // gradioApp().querySelector("#active-tab-name").innerText = "Txt2Img";
+      txt2ImgActive = true;
     } else if (els.img2ImgTab.style.display === "block") {
       els.img2ImgTopRow.insertAdjacentElement("afterend", els.uiContainer);
-      // gradioApp().querySelector("#active-tab-name").innerText = "Img2Img";
+      txt2ImgActive = false;
     }
   });
 

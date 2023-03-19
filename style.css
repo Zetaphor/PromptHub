@@ -48,12 +48,29 @@
   margin-top: 1rem;
 }
 
-.sd-better-styles-load-save-btns {
-  gap: 10%;
-  justify-content: center;
-  margin-top: 1rem;
+.sd-better-styles-section textarea {
+  background-color: #1f2937 !important;
+  color: rgb(229, 231, 235) !important;
+  resize: none !important;
 }
 
-.sd-better-styles-load-save-btns button {
+.sd-better-styles-prompt-right-btns {
+  min-width: auto !important;
+  display: flex;
+  flex: 0 1 5rem !important;
+  align-items: center;
+  flex-direction: column !important;
+}
+
+.sd-better-styles-prompt-right-btns button {
   max-width: 10rem !important;
+}
+
+.sd-better-styles-resizable {
+  resize: vertical !important;
+  overflow: scroll;
+}
+
+.sd-better-styles-inline-text {
+  flex: 0 1 !important;
 }
