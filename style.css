@@ -1,0 +1,59 @@
+.sd-better-styles-prompt-btn {
+  margin: 0.625rem 0 !important;
+  max-height: 40% !important;
+  align-self: auto !important;
+}
+
+.sd-better-styles-prompt-btn-container {
+  min-width: auto !important;
+}
+
+.sd-better-styles-prompt-btn:hover {
+  background-image: rgba(255, 255, 255, 0.8) !important;
+}
+
+.sd-better-styles-prompt-top-button {
+  margin-bottom: 0 !important;
+}
+
+.sd-better-styles-multiselect {
+  background-color: #1f2937;
+  border-style: solid;
+  border-color: #374151;
+  border-width: 1px !important;
+  border-radius: 8px !important;
+  background-image: none !important;
+  padding-right: 0 !important;
+  /* margin-right: 12px; */
+}
+
+.sd-better-styles-section-btn-container {
+  min-width: auto !important;
+  display: flex;
+  flex: 0 1 4% !important;
+  /* align-items: center !important; */
+  flex-direction: column !important;
+}
+
+.sd-better-styles-prompt-title {
+  line-height: 24px;
+}
+
+.sd-better-styles-section {
+  border-style: solid;
+  border-color: #374151;
+  border-width: 1px !important;
+  border-radius: 8px !important;
+  padding: 12px;
+  margin-top: 1rem;
+}
+
+.sd-better-styles-load-save-btns {
+  gap: 10%;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.sd-better-styles-load-save-btns button {
+  max-width: 10rem !important;
+}
