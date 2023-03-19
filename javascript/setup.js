@@ -13,6 +13,9 @@ function log(...data) {
 const els = {
   historyContainer: null,
   savedContainer: null,
+  savedPositiveInput: null,
+  savedNegativeInput: null,
+  savedUpdate: null,
 
   txt2ImgTab: null,
   txt2ImgTopRow: null,
@@ -40,6 +43,9 @@ let timeout = null;
 
 let txt2ImgActive = true;
 
+let fileContents = "";
+let fileReadCallback = null;
+
 const btnToolClasses = ["gr-button", "gr-button-lg", "gr-button-tool", "sd-better-styles-prompt-btn"];
 
 async function waitForElements(selectors) {
@@ -57,6 +63,27 @@ async function waitForElements(selectors) {
 
     checkElements();
   });
+}
+
+function readJSONFile(callback, arg) {
+  // Remove the old input to clear the event listeners
+  const fileInput = gradioApp().querySelector("#sd-better-styles-file-input");
+  const newFileInput = fileInput.cloneNode(true);
+  fileInput.parentNode.replaceChild(newFileInput, fileInput);
+
+  newFileInput.addEventListener("change", function () {
+    const file = this.files[0];
+    const reader = new FileReader();
+
+    reader.addEventListener("load", function () {
+      const fileContents = JSON.parse(reader.result);
+      callback(fileContents, arg);
+    });
+
+    reader.readAsText(file);
+  });
+
+  newFileInput.click();
 }
 
 async function setup() {
@@ -114,6 +141,18 @@ function injectUI() {
       els.positiveHistoryList = gradioApp().querySelector("#sd-better-styles-positive-history");
       els.negativeHistoryList = gradioApp().querySelector("#sd-better-styles-negative-history");
       els.savedPromptsList = gradioApp().querySelector("#sd-better-styles-saved-prompts");
+      els.savedPromptsList.addEventListener("change", (e) => {
+        displaySavedPrompt();
+      });
+      els.savedUpdate = gradioApp().querySelector("#sd-better-styles-saved-update");
+      els.savedPositiveInput = gradioApp().querySelector("#sd-better-styles-saved-positive-input");
+      els.savedNegativeInput = gradioApp().querySelector("#sd-better-styles-saved-negative-input");
+      els.savedPositiveInput.addEventListener("input", (e) => {
+        checkSavedInputs();
+      });
+      els.savedNegativeInput.addEventListener("input", (e) => {
+        checkSavedInputs();
+      });
 
       loadHistory();
       info("Setup complete!");
@@ -123,6 +162,64 @@ function injectUI() {
 
 function setupButtons() {
   debug("Adding button listeners...");
+
+  gradioApp()
+    .querySelector("#sd-better-styles-history-save-current")
+    .addEventListener("click", () => {
+      saveCurrent();
+    });
+  gradioApp()
+    .querySelector("#sd-better-styles-history-save-selected")
+    .addEventListener("click", () => {
+      saveSelected();
+    });
+
+  gradioApp()
+    .querySelector("#sd-better-styles-saved-import")
+    .addEventListener("click", () => {
+      readJSONFile(importSaved);
+    });
+  gradioApp()
+    .querySelector("#sd-better-styles-saved-export")
+    .addEventListener("click", () => {
+      exportSaved();
+    });
+  gradioApp()
+    .querySelector("#sd-better-styles-saved-clear")
+    .addEventListener("click", () => {
+      clearSaved();
+    });
+  gradioApp()
+    .querySelector("#sd-better-styles-saved-update")
+    .addEventListener("click", () => {
+      updateSavedPrompt();
+    });
+  gradioApp()
+    .querySelector("#sd-better-styles-saved-rename")
+    .addEventListener("click", () => {
+      renameSavedPrompt();
+    });
+  gradioApp()
+    .querySelector("#sd-better-styles-saved-remove")
+    .addEventListener("click", () => {
+      removeSavedPrompt();
+    });
+  gradioApp()
+    .querySelector("#sd-better-styles-saved-apply-both")
+    .addEventListener("click", () => {
+      applySavedPrompt("both");
+    });
+  gradioApp()
+    .querySelector("#sd-better-styles-saved-apply-positive")
+    .addEventListener("click", () => {
+      applySavedPrompt("positive");
+    });
+  gradioApp()
+    .querySelector("#sd-better-styles-saved-apply-negative")
+    .addEventListener("click", () => {
+      applySavedPrompt("negative");
+    });
+
   gradioApp()
     .querySelector("#sd-better-styles-history-toggle")
     .addEventListener("click", () => {
@@ -156,12 +253,12 @@ function setupButtons() {
   gradioApp()
     .querySelector("#sd-better-styles-history-import-positive")
     .addEventListener("click", () => {
-      clearHistory(true);
+      readJSONFile(importHistory, true);
     });
   gradioApp()
     .querySelector("#sd-better-styles-history-export-positive")
     .addEventListener("click", () => {
-      clearHistory(true);
+      exportHistory(true);
     });
 
   gradioApp()
@@ -187,12 +284,12 @@ function setupButtons() {
   gradioApp()
     .querySelector("#sd-better-styles-history-import-negative")
     .addEventListener("click", () => {
-      clearHistory(false);
+      readJSONFile(importHistory, false);
     });
   gradioApp()
     .querySelector("#sd-better-styles-history-export-negative")
     .addEventListener("click", () => {
-      clearHistory(false);
+      exportHistory(false);
     });
 }
 
@@ -318,9 +415,11 @@ function initTabObserver() {
     if (els.txt2ImgTab.style.display === "block") {
       els.txt2ImgTopRow.insertAdjacentElement("afterend", els.uiContainer);
       txt2ImgActive = true;
+      gradioApp().querySelector("#sd-better-styles-history-current-label").innerText = "Save Current txt2img Prompt";
     } else if (els.img2ImgTab.style.display === "block") {
       els.img2ImgTopRow.insertAdjacentElement("afterend", els.uiContainer);
       txt2ImgActive = false;
+      gradioApp().querySelector("#sd-better-styles-history-current-label").innerText = "Save Current img2img Prompt";
     }
   });
 

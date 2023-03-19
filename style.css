@@ -74,3 +74,11 @@
 .sd-better-styles-inline-text {
   flex: 0 1 !important;
 }
+
+#sd-better-styles-file-input {
+  display: none;
+}
+
+.sd-better-styles-hide-btn {
+  display: none !important;
+}
