@@ -1,22 +1,22 @@
-.sd-better-styles-prompt-btn {
+.promptHub-prompt-btn {
   margin: 0.625rem 0 !important;
   max-height: 40% !important;
   align-self: auto !important;
 }
 
-.sd-better-styles-prompt-btn-container {
+.promptHub-prompt-btn-container {
   min-width: auto !important;
 }
 
-.sd-better-styles-prompt-btn:hover {
+.promptHub-prompt-btn:hover {
   background-image: rgba(255, 255, 255, 0.8) !important;
 }
 
-.sd-better-styles-prompt-top-button {
+.promptHub-prompt-top-button {
   margin-bottom: 0 !important;
 }
 
-.sd-better-styles-multiselect {
+.promptHub-multiselect {
   background-color: #1f2937;
   border-style: solid;
   border-color: #374151;
@@ -27,7 +27,7 @@
   /* margin-right: 12px; */
 }
 
-.sd-better-styles-section-btn-container {
+.promptHub-section-btn-container {
   min-width: auto !important;
   display: flex;
   flex: 0 1 4% !important;
@@ -35,11 +35,11 @@
   flex-direction: column !important;
 }
 
-.sd-better-styles-prompt-title {
+.promptHub-prompt-title {
   line-height: 24px;
 }
 
-.sd-better-styles-section {
+.promptHub-section {
   border-style: solid;
   border-color: #374151;
   border-width: 1px !important;
@@ -48,13 +48,13 @@
   margin-top: 1rem;
 }
 
-.sd-better-styles-section textarea {
+.promptHub-section textarea {
   background-color: #1f2937 !important;
   color: rgb(229, 231, 235) !important;
   resize: none !important;
 }
 
-.sd-better-styles-prompt-right-btns {
+.promptHub-prompt-right-btns {
   min-width: auto !important;
   display: flex;
   flex: 0 1 5rem !important;
@@ -62,23 +62,23 @@
   flex-direction: column !important;
 }
 
-.sd-better-styles-prompt-right-btns button {
+.promptHub-prompt-right-btns button {
   max-width: 10rem !important;
 }
 
-.sd-better-styles-resizable {
+.promptHub-resizable {
   resize: vertical !important;
   overflow: scroll;
 }
 
-.sd-better-styles-inline-text {
+.promptHub-inline-text {
   flex: 0 1 !important;
 }
 
-#sd-better-styles-file-input {
+#promptHub-file-input {
   display: none;
 }
 
-.sd-better-styles-hide-btn {
+.promptHub-hide-btn {
   display: none !important;
 }
