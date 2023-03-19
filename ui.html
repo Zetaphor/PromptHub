@@ -1,178 +1,182 @@
 <div class="flex flex-col relative col gap-4 gr-compact sd-better-styles-section">
-  <div class="w-full flex justify-between cursor-pointer">
+  <div id="sd-better-styles-history-toggle" class="w-full flex justify-between cursor-pointer">
     <span class="sd-better-styles-prompt-title">Prompt History</span>
-    <span class="transition rotate-90">▼</span>
+    <span id="history-header-expansion-indicator" class="transition rotate-90">▼</span>
   </div>
 
-  <div style="margin-top: 1rem">
-    <span>Positive</span>
-    <div class="flex row w-full">
-      <div class="sd-better-styles-section-btn-container">
+  <div id="sd-better-styles-history-container" class="hidden">
+    <div style="margin-top: 1rem">
+      <span>Positive</span>
+      <div class="flex row w-full">
+        <div class="sd-better-styles-section-btn-container">
+          <button
+            id="sd-better-styles-history-add-positive"
+            class="gr-button gr-button-lg gr-button-tool sd-better-styles-prompt-btn"
+            title="Add selected style to positive prompt"
+          >
+            ➕
+          </button>
+          <button
+            id="sd-better-styles-history-remove-positive"
+            class="gr-button gr-button-lg gr-button-tool sd-better-styles-prompt-btn"
+            title="Remove the selected prompt from history"
+          >
+            🗑
+          </button>
+        </div>
+        <select
+          id="sd-better-styles-positive-history"
+          class="sd-better-styles-multiselect sd-better-styles-resizable"
+          size="4"
+        ></select>
+      </div>
+      <div class="flex row w-full flex-wrap gap-4" style="margin-top: 1rem">
         <button
-          id="sd-better-styles-history-add-positive"
-          class="gr-button gr-button-lg gr-button-tool sd-better-styles-prompt-btn"
-          title="Add selected style to positive prompt"
+          id="sd-better-styles-history-save-positive"
+          class="gr-button gr-button-sm gr-button-secondary"
+          title="Save the selected prompt"
         >
-          ➕
+          💾 Save Selected
         </button>
         <button
-          id="sd-better-styles-history-remove-positive"
-          class="gr-button gr-button-lg gr-button-tool sd-better-styles-prompt-btn"
-          title="Remove the selected prompt from history"
+          id="sd-better-styles-history-reset-positive"
+          class="gr-button gr-button-sm gr-button-secondary"
+          title="Clear the positive prompt history"
         >
-          🗑
+          ❌ Clear History
+        </button>
+        <button
+          id="sd-better-styles-history-import-positive"
+          class="gr-button gr-button-sm gr-button-secondary"
+          title="Import a previous list of positive prompts from a file"
+        >
+          ⬆️ Import
+        </button>
+        <button
+          id="sd-better-styles-history-export-positive"
+          class="gr-button gr-button-sm gr-button-secondary"
+          title="Export the list of positive prompts to a file"
+        >
+          ⬇️ Export
         </button>
       </div>
-      <select
-        id="sd-better-styles-positive-history"
-        class="sd-better-styles-multiselect sd-better-styles-resizable"
-        size="4"
-      ></select>
     </div>
-    <div class="flex row w-full flex-wrap gap-4" style="margin-top: 1rem">
-      <button
-        id="sd-better-styles-history-save-positive"
-        class="gr-button gr-button-sm gr-button-secondary"
-        title="Save the selected prompt"
-      >
-        💾 Save Selected
-      </button>
-      <button
-        id="sd-better-styles-history-reset-positive"
-        class="gr-button gr-button-sm gr-button-secondary"
-        title="Clear the positive prompt history"
-      >
-        ❌ Clear History
-      </button>
-      <button
-        id="sd-better-styles-history-import-positive"
-        class="gr-button gr-button-sm gr-button-secondary"
-        title="Import a previous list of positive prompts from a file"
-      >
-        ⬆️ Import
-      </button>
-      <button
-        id="sd-better-styles-history-export-positive"
-        class="gr-button gr-button-sm gr-button-secondary"
-        title="Export the list of positive prompts to a file"
-      >
-        ⬇️ Export
-      </button>
-    </div>
-  </div>
 
-  <div style="margin-top: 2rem">
-    <span>Negative</span>
-    <div class="flex row w-full">
-      <div class="sd-better-styles-section-btn-container">
+    <div style="margin-top: 2rem">
+      <span>Negative</span>
+      <div class="flex row w-full">
+        <div class="sd-better-styles-section-btn-container">
+          <button
+            id="sd-better-styles-history-add-negative"
+            class="gr-button gr-button-lg gr-button-tool sd-better-styles-prompt-btn"
+            title="Add selected style to positive prompt"
+          >
+            ➕
+          </button>
+          <button
+            id="sd-better-styles-history-remove-negative"
+            class="gr-button gr-button-lg gr-button-tool sd-better-styles-prompt-btn"
+            title="Remove the selected prompt from history"
+          >
+            🗑
+          </button>
+        </div>
+        <select
+          id="sd-better-styles-negative-history"
+          class="sd-better-styles-multiselect sd-better-styles-resizable"
+          size="4"
+        ></select>
+      </div>
+      <div class="flex row w-full flex-wrap gap-4" style="margin-top: 1rem">
         <button
-          id="sd-better-styles-history-add-negative"
-          class="gr-button gr-button-lg gr-button-tool sd-better-styles-prompt-btn"
-          title="Add selected style to positive prompt"
+          id="sd-better-styles-history-save-negative"
+          class="gr-button gr-button-sm gr-button-secondary"
+          title="Save the selected prompt"
         >
-          ➕
+          💾 Save Selected
         </button>
         <button
-          id="sd-better-styles-history-remove-negative"
-          class="gr-button gr-button-lg gr-button-tool sd-better-styles-prompt-btn"
-          title="Remove the selected prompt from history"
+          id="sd-better-styles-history-reset-negative"
+          class="gr-button gr-button-sm gr-button-secondary"
+          title="Clear the negative prompt history"
         >
-          🗑
+          ❌ Clear History
+        </button>
+        <button
+          id="sd-better-styles-history-import-negative"
+          class="gr-button gr-button-sm gr-button-secondary"
+          title="Import a previous list of negative prompts from a file"
+        >
+          ⬆️ Import
+        </button>
+        <button
+          id="sd-better-styles-history-export-negative"
+          class="gr-button gr-button-sm gr-button-secondary"
+          title="Export the list of negative prompts to a file"
+        >
+          ⬇️ Export
         </button>
       </div>
-      <select
-        id="sd-better-styles-negative-history"
-        class="sd-better-styles-multiselect sd-better-styles-resizable"
-        size="4"
-      ></select>
-    </div>
-    <div class="flex row w-full flex-wrap gap-4" style="margin-top: 1rem">
-      <button
-        id="sd-better-styles-history-save-negative"
-        class="gr-button gr-button-sm gr-button-secondary"
-        title="Save the selected prompt"
-      >
-        💾 Save Selected
-      </button>
-      <button
-        id="sd-better-styles-history-reset-negative"
-        class="gr-button gr-button-sm gr-button-secondary"
-        title="Clear the negative prompt history"
-      >
-        ❌ Clear History
-      </button>
-      <button
-        id="sd-better-styles-history-import-negative"
-        class="gr-button gr-button-sm gr-button-secondary"
-        title="Import a previous list of negative prompts from a file"
-      >
-        ⬆️ Import
-      </button>
-      <button
-        id="sd-better-styles-history-export-negative"
-        class="gr-button gr-button-sm gr-button-secondary"
-        title="Export the list of negative prompts to a file"
-      >
-        ⬇️ Export
-      </button>
     </div>
   </div>
 </div>
 
-<div class="flex flex-col relative col gap-4 gr-compact sd-better-styles-section">
+<div id="sd-better-styles-saved-toggle" class="flex flex-col relative col gap-4 gr-compact sd-better-styles-section">
   <div class="w-full flex justify-between cursor-pointer">
     <span class="sd-better-styles-prompt-title">Saved Prompts</span>
-    <span class="transition rotate-90">▼</span>
+    <span id="saved-header-expansion-indicator" class="transition rotate-90">▼</span>
   </div>
 
-  <div class="flex row w-full sd-better-styles-resizable" style="margin-top: 1rem">
-    <div class="sd-better-styles-section-btn-container">
-      <button
-        class="gr-button gr-button-lg gr-button-tool sd-better-styles-prompt-btn"
-        title="Import a list of styles from a file"
-        style="margin: 0 !important"
+  <div id="sd-better-styles-saved-container" class="hidden" style="margin-top: 1rem">
+    <div class="flex row w-full sd-better-styles-resizable">
+      <div class="sd-better-styles-section-btn-container">
+        <button
+          class="gr-button gr-button-lg gr-button-tool sd-better-styles-prompt-btn"
+          title="Import a list of styles from a file"
+          style="margin: 0 !important"
+        >
+          ⬆️
+        </button>
+        <button
+          class="gr-button gr-button-lg gr-button-tool sd-better-styles-prompt-btn"
+          title="Save the current list of styles to a file"
+        >
+          ⬇️
+        </button>
+        <button
+          class="gr-button gr-button-lg gr-button-tool sd-better-styles-prompt-btn"
+          title="Clear the list of styles"
+          style="margin: 0 !important"
+        >
+          ❌
+        </button>
+      </div>
+      <select
+        id="sd-better-styles-saved-prompts"
+        class="sd-better-styles-multiselect sd-better-styles-resizable"
+        size="4"
       >
-        ⬆️
-      </button>
-      <button
-        class="gr-button gr-button-lg gr-button-tool sd-better-styles-prompt-btn"
-        title="Save the current list of styles to a file"
-      >
-        ⬇️
-      </button>
-      <button
-        class="gr-button gr-button-lg gr-button-tool sd-better-styles-prompt-btn"
-        title="Clear the list of styles"
-        style="margin: 0 !important"
-      >
-        ❌
-      </button>
+        <option>Testing</option>
+        <option>Testing</option>
+        <option>Testing</option>
+        <option>Testing</option>
+        <option>Testing</option>
+        <option>Testing</option>
+      </select>
     </div>
-    <select
-      id="sd-better-styles-saved-prompts"
-      class="sd-better-styles-multiselect sd-better-styles-resizable"
-      size="4"
-    >
-      <option>Testing</option>
-      <option>Testing</option>
-      <option>Testing</option>
-      <option>Testing</option>
-      <option>Testing</option>
-      <option>Testing</option>
-    </select>
-  </div>
-  <div class="flex row w-full flex row w-full flex-col sd-better-styles-section sd-better-styles-resizable">
-    <span class="sd-better-styles-inline-text">Positive:</span>
-    <textarea class="sd-better-styles-section">Example Positive</textarea>
-  </div>
-  <div class="flex row w-full flex row w-full flex-col sd-better-styles-section sd-better-styles-resizable">
-    <span class="sd-better-styles-inline-text">Negative:</span>
-    <textarea class="sd-better-styles-section">Example Negative</textarea>
-  </div>
-  <button class="gr-button gr-button-lg gr-button-secondary" style="margin-top: 1rem">💾 Save Prompt Changes</button>
-  <div class="flex row w-full flex-wrap gap-4" style="margin-top: 1rem">
-    <button class="gr-button gr-button-sm gr-button-secondary">↕️ Apply Both</button>
-    <button class="gr-button gr-button-sm gr-button-secondary">➕ Apply Positive</button>
-    <button class="gr-button gr-button-sm gr-button-secondary">➖ Apply Negative</button>
+    <div class="flex row w-full flex row w-full flex-col sd-better-styles-section sd-better-styles-resizable">
+      <span class="sd-better-styles-inline-text">Positive:</span>
+      <textarea class="sd-better-styles-section">Example Positive</textarea>
+    </div>
+    <div class="flex row w-full flex row w-full flex-col sd-better-styles-section sd-better-styles-resizable">
+      <span class="sd-better-styles-inline-text">Negative:</span>
+      <textarea class="sd-better-styles-section">Example Negative</textarea>
+    </div>
+    <button class="gr-button gr-button-lg gr-button-secondary" style="margin-top: 1rem">💾 Save Prompt Changes</button>
+    <div class="flex row w-full flex-wrap gap-4" style="margin-top: 1rem">
+      <button class="gr-button gr-button-sm gr-button-secondary">↕️ Apply Both</button>
+      <button class="gr-button gr-button-sm gr-button-secondary">➕ Apply Positive</button>
+      <button class="gr-button gr-button-sm gr-button-secondary">➖ Apply Negative</button>
+    </div>
   </div>
 </div>

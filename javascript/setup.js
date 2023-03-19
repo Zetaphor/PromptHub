@@ -11,6 +11,9 @@ function log(...data) {
 }
 
 const els = {
+  historyContainer: null,
+  savedContainer: null,
+
   txt2ImgTab: null,
   txt2ImgTopRow: null,
   txt2ImgSettings: null,
@@ -28,7 +31,9 @@ const els = {
   savedPromptsList: null,
 };
 
-let betttabMutationObserver = null;
+let historyVisible = false;
+
+let tabMutationObserver = null;
 
 let setupComplete = false;
 let timeout = null;
@@ -104,6 +109,8 @@ function injectUI() {
       injectImg2ImgPromptUI();
       setupButtons();
 
+      els.historyContainer = gradioApp().querySelector("#sd-better-styles-history-container");
+      els.savedContainer = gradioApp().querySelector("#sd-better-styles-saved-container");
       els.positiveHistoryList = gradioApp().querySelector("#sd-better-styles-positive-history");
       els.negativeHistoryList = gradioApp().querySelector("#sd-better-styles-negative-history");
       els.savedPromptsList = gradioApp().querySelector("#sd-better-styles-saved-prompts");
@@ -116,6 +123,16 @@ function injectUI() {
 
 function setupButtons() {
   debug("Adding button listeners...");
+  gradioApp()
+    .querySelector("#sd-better-styles-history-toggle")
+    .addEventListener("click", () => {
+      toggleHistory();
+    });
+  gradioApp()
+    .querySelector("#sd-better-styles-saved-toggle")
+    .addEventListener("click", () => {
+      toggleSaved();
+    });
   gradioApp()
     .querySelector("#sd-better-styles-history-add-positive")
     .addEventListener("click", () => {

@@ -3,6 +3,26 @@ let negativeHistory = [];
 let savedPrompts = [];
 let lastSaved = null;
 
+function toggleHistory() {
+  if (els.historyContainer.classList.contains("hidden")) {
+    els.historyContainer.classList.remove("hidden");
+    gradioApp().querySelector("#history-header-expansion-indicator").classList.remove("rotate-90");
+  } else {
+    els.historyContainer.classList.add("hidden");
+    gradioApp().querySelector("#history-header-expansion-indicator").classList.add("rotate-90");
+  }
+}
+
+function toggleSaved() {
+  if (els.savedContainer.classList.contains("hidden")) {
+    els.savedContainer.classList.remove("hidden");
+    gradioApp().querySelector("#saved-header-expansion-indicator").classList.remove("rotate-90");
+  } else {
+    els.savedContainer.classList.add("hidden");
+    gradioApp().querySelector("#saved-header-expansion-indicator").classList.add("rotate-90");
+  }
+}
+
 function loadHistory() {
   if (localStorage.getItem("sd-better-styles-last-saved") === null) {
     localStorage.setItem("sd-better-styles-last-saved", Date.now());
