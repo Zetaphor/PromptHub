@@ -356,6 +356,41 @@ promptHubSetup = {
       .addEventListener("click", () => {
         promptHubInterface.exportHistory(false);
       });
+
+    const txt2imgGenerate = gradioApp().querySelector("#txt2img_generate");
+    txt2imgGenerate.addEventListener("click", (event) => {
+      promptHubInterface.generationRun();
+    });
+
+    const img2imgGenerate = gradioApp().querySelector("#img2img_generate");
+    img2imgGenerate.addEventListener("click", (event) => {
+      promptHubInterface.generationRun();
+      img2imgGenerate.dispatchEvent(event);
+    });
+
+    promptHubSetup.els.txt2ImgPrompt.addEventListener("keydown", function (event) {
+      if (event.key === "Enter" && (event.ctrlKey || event.altKey)) {
+        promptHubInterface.generationRun();
+      }
+    });
+
+    promptHubSetup.els.txt2ImgNegPrompt.addEventListener("keydown", function (event) {
+      if (event.key === "Enter" && (event.ctrlKey || event.altKey)) {
+        promptHubInterface.generationRun();
+      }
+    });
+
+    promptHubSetup.els.img2ImgPrompt.addEventListener("keydown", function (event) {
+      if (event.key === "Enter" && (event.ctrlKey || event.altKey)) {
+        promptHubInterface.generationRun();
+      }
+    });
+
+    promptHubSetup.els.img2ImgNegPrompt.addEventListener("keydown", function (event) {
+      if (event.key === "Enter" && (event.ctrlKey || event.altKey)) {
+        promptHubInterface.generationRun();
+      }
+    });
   },
 
   injectText2ImgPromptUI: function () {

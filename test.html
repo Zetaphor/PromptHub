@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>List Box Example</title>
+    <style>
+      .container {
+        resize: vertical !important;
+        overflow: scroll;
+      }
+
+      .inner-container {
+        min-height: 100%;
+      }
+
+      .list-item {
+        display: block;
+        padding: 5px;
+        background-color: white;
+        cursor: pointer;
+      }
+
+      .list-item:hover {
+        background-color: #eee;
+      }
+
+      .list-item input[type="radio"] {
+        display: none;
+      }
+
+      .list-item input[type="radio"]:checked + span {
+        background-color: #007bff;
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container" style="max-width: 200px">
+      <div class="inner-container" style="border: 1px solid #ccc; height: 100px; overflow-y: scroll">
+        <label class="list-item">
+          <input type="radio" name="list" value="item1" />
+          <span class="list-item">Item 1 Item 1Item 1Item 1Item 1Item 1Item 1Item 1Item 1</span>
+        </label>
+        <label class="list-item">
+          <input type="radio" name="list" value="item2" />
+          <span class="list-item">Item 2</span>
+        </label>
+        <label class="list-item">
+          <input type="radio" name="list" value="item3" />
+          <span class="list-item">Item 3</span>
+        </label>
+        <label class="list-item">
+          <input type="radio" name="list" value="item4" />
+          <span class="list-item">Item 4</span>
+        </label>
+        <label class="list-item">
+          <input type="radio" name="list" value="item5" />
+          <span class="list-item">Item 5</span>
+        </label>
+        <label class="list-item">
+          <input type="radio" name="list" value="item6" />
+          <span class="list-item">Item 6</span>
+        </label>
+        <label class="list-item">
+          <input type="radio" name="list" value="item7" />
+          <span class="list-item">Item 7</span>
+        </label>
+        <label class="list-item">
+          <input type="radio" name="list" value="item8" />
+          <span class="list-item">Item 8</span>
+        </label>
+        <label class="list-item">
+          <input type="radio" name="list" value="item9" />
+          <span class="list-item">Item 9</span>
+        </label>
+        <label class="list-item">
+          <input type="radio" name="list" value="item10" />
+          <span class="list-item">Item 10</span>
+        </label>
+      </div>
+    </div>
+
+    <script>
+      const listItems = document.querySelectorAll('.list-item input[type="radio"]');
+
+      listItems.forEach((item) => {
+        item.addEventListener("change", () => {
+          if (item.checked) {
+            console.log(item.value); // or do something else with the selected value
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

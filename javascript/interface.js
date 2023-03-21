@@ -66,6 +66,16 @@ window.promptHubInterface = {
     localStorage.setItem("promptHub-last-saved", Date.now());
   },
 
+  generationRun: function () {
+    if (promptHubSetup.txt2ImgActive) {
+      promptHubInterface.createHistoryItem(promptHubSetup.els.txt2ImgPrompt.value, true);
+      promptHubInterface.createHistoryItem(promptHubSetup.els.txt2ImgNegPrompt.value, false);
+    } else {
+      promptHubInterface.createHistoryItem(promptHubSetup.els.img2ImgPrompt.value, true);
+      promptHubInterface.createHistoryItem(promptHubSetup.els.img2ImgNegPrompt.value, false);
+    }
+  },
+
   createHistoryItem: function (prompt, isPositive) {
     let historyTarget = promptHubSetup.els.positiveHistoryList;
     if (isPositive) {
