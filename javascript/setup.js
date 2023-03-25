@@ -160,7 +160,7 @@ promptHubSetup = {
 
   injectUI: function () {
     promptHubSetup.debug("Injecting UI...");
-    fetch(`${window.location}file=/home/zetaphor/stable-diffusion-webui/extensions/promptHub/ui.html`)
+    fetch(`${window.location}file=./extensions/promptHub/ui.html`)
       .then((response) => response.text())
       .then((data) => {
         const uiParser = new DOMParser();
