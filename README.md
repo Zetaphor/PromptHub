@@ -6,6 +6,12 @@ The goal of this tool is to make iterating on prompts faster and more efficient 
 
 Using this extension you will never forget a prompt again, have easy access to all of your saved prompts, be able to better manage your prompt collection, and even easily share specific prompt collections with others!
 
+### Installation
+
+Navigate to the extensions tab, select "Install from URL" and paste the URl for this repo into the entry box. Then go back to "Installed" and select "Apply and restart UI"
+
+Repo URL: https://github.com/Zetaphor/PromptHub.git
+
 ![image](https://user-images.githubusercontent.com/3112763/227691648-9773fd84-f358-4da8-9d36-8e965f9e9d32.png)
 
 There are three primary additions to the UI with this extension:
