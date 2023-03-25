@@ -19,6 +19,7 @@ There are three primary additions to the UI with this extension:
 ![image](https://user-images.githubusercontent.com/3112763/227691910-7a1c8cdc-bc0e-45e4-860d-49ecb357b910.png)
 
 The top button allows you to manually save a positive/negative prompt to history. This is useful if you want to save a prompt to history without first generating an image from it.
+
 The second button allows you to clear that prompt field, so only the positive or only the negative, rather than both witht the standard Automatic1111 delete button.
 
 ### Prompt History Panel
@@ -30,6 +31,7 @@ Duplicate generations of the same prompt will not be saved, only unique entries 
 
 #### Saving History Items
 The "Save Current X Prompt" button at the top allows you to save the currently entered positive/negative prompt in the txt2img or img2img tab to the Saved Prompts Panel.
+
 Alternatively you can select an individual positive and negative prompt and use the "Save Selected History Prompts" button at the bottom to save the selected entries to the Saved Prompts Panel.
 
 Choosing "Save Selected" under the positive or negative panel will allow you to create a new Saved Prompt that contains _only_ the positive or negative prompt you've selected.
@@ -39,7 +41,9 @@ Choosing "Save Selected" under the positive or negative panel will allow you to 
 Clicking the + button will replace the current positive or negative prompt with the item you selected.
 
 The Import and Export and export buttons allow you to save your history sessions to an external file.
+
 You will be prompted for a filename and the history entries will be saved as `<filename>.prompt-history.json`.
+
 In addition to being able to import/export session history, all history items are saved in browser cache and persist through page reloads.
 
 ### Saved Prompts Panel
@@ -52,4 +56,6 @@ You can then select one of the apply buttons to append the prompt value to the p
 
 Additionally you can export and import save prompts. You will be prompted for a filename, entries are saved in the format of `<filename>.prompts.json`.
 
-A prompt can be edited by selecting its name and then modifying the contents in the positive or negative text entry fields. If the content in the field is unsaved, a button will appear asking if you want to override the prompts contents.
+A prompt can be edited by selecting its name and then modifying the contents in the positive or negative text entry fields. 
+
+If the content in the field is unsaved, a button will appear asking if you want to override the prompts contents.
