@@ -64,6 +64,8 @@ You can then select one of the apply buttons to append the prompt value to the p
 
 Additionally you can export and import save prompts. You will be prompted for a filename, entries are saved in the format of `<filename>.prompts.json`.
 
+Saved prompts are saved in the browser cache and will persist across page reloads.
+
 A prompt can be edited by selecting its name and then modifying the contents in the positive or negative text entry fields. 
 
 If the content in the field is unsaved, a button will appear asking if you want to override the prompts contents.
