@@ -12,6 +12,8 @@ Navigate to the extensions tab, select "Install from URL" and paste the URl for 
 
 Repo URL: https://github.com/Zetaphor/PromptHub.git
 
+### Feature Overview
+
 ![image](https://user-images.githubusercontent.com/3112763/227691648-9773fd84-f358-4da8-9d36-8e965f9e9d32.png)
 
 There are three primary additions to the UI with this extension:
