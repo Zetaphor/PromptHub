@@ -1,5 +1,7 @@
 # PromptHub
 
+## Note: This is broken with the latest release of Automatic1111 on March 25'th. This update broke a LOT of extensions. I'm working on a fix. [See this reddit post for more details](https://www.reddit.com/r/StableDiffusion/comments/121kqkd/psa_hold_up_with_updating_automatic1111_for_now/).
+
 PromptHub is a prompt history and styles manager extension for Automatic1111.
 
 The goal of this tool is to make iterating on prompts faster and more efficient by providing full prompt history management, as well as an improved experience for saving and maanging previous prompts.
