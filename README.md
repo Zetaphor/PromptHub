@@ -4,7 +4,7 @@
 
 PromptHub is a prompt history and styles manager extension for Automatic1111.
 
-The goal of this tool is to make iterating on prompts faster and more efficient by providing full prompt history management, as well as an improved experience for saving and maanging previous prompts.
+The goal of this tool is to make iterating on prompts faster and more efficient by providing full prompt history management, as well as an improved experience for saving and managing previous prompts.
 
 Using this extension you will never forget a prompt again, have easy access to all of your saved prompts, be able to better manage your prompt collection, and even easily share specific prompt collections with others!
 
